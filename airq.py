@@ -92,3 +92,5 @@ data = get_data(get_params(s, param))
 
 fig = px.line(data['values'], x='date', y="value", title=param)
 chart1 = st.plotly_chart(fig)
+
+st.caption(Github page: https://github.com/placeholder2)
