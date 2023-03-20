@@ -92,18 +92,3 @@ data = get_data(get_params(s, param))
 
 fig = px.line(data['values'], x='date', y="value", title=param)
 chart1 = st.plotly_chart(fig)
-
-# city = get_city(cities)
-# print(city[134])
-# stations = get_stations(city[134],cities)
-# print(stations)
-# id = get_id((stations[0]),cities)
-# print(id)
-# s = get_sensors(id)
-# li=param_list(s)
-# print(param_list(s))
-# print(get_params(s,li[2]))
-# ppp = get_params(s,li[2])
-# print(get_data(ppp))
-# if 'Otwock' in city:
-#     print(city.index('Otwock'))
