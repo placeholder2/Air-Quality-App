@@ -8,7 +8,7 @@ logging.info(stations)
 cities = stations.json()
 
 
-def get_city():
+def get_city(arg):
     city_list = [(element['city']['name']) for index, element in enumerate(cities)]
     city_list = sorted(city_list, key=lambda l: l[0])
     return list(dict.fromkeys(city_list))
@@ -20,9 +20,9 @@ def get_stations(city, arg):
 
 
 def get_id(station, arg):
-    for name in range(len(arg)):
-        if arg[name]['stationName'] == station:
-            return arg[name]['id']
+    for i in range(len(arg)):
+        if arg[i]['stationName'] == station:
+            return (arg[i]['id'])
 
 
 def get_sensors(wrt):
@@ -35,23 +35,23 @@ def param_list(sensors):
     return [value['param']['paramName'] for index, value in enumerate(sensors)]
 
 
-def get_params(sensors, parameter):
-    for sensor in range(len(sensors)):
-        if sensors[sensor]['param']['paramName'] == parameter:
-            return sensors[sensor]['id']
+def get_params(sensors, param):
+    for i in range(len(sensors)):
+        if sensors[i]['param']['paramName'] == param:
+            return sensors[i]['id']
 
 
 def get_data(p_id):
     url = 'https://api.gios.gov.pl/pjp-api/rest/data/getData/' + str(p_id)
-    station_data = requests.get(url)
-    return station_data.json()
+    data = requests.get(url)
+    return data.json()
 
 
-city = get_city()
+city = get_city(cities)
 st.title(' **Air quality in Poland**')
 st.write('\n')
-selectcity = st.selectbox('Wybierz miasto', city)
-selectstation = st.selectbox('Wybierz stację', get_stations(selectcity, cities))
+selectcity = st.selectbox('Choose city', city)
+selectstation = st.selectbox('Choose station', get_stations(selectcity, cities))
 id = get_id(selectstation, cities)
 s = get_sensors(id)
 param_list = param_list(s)
@@ -62,27 +62,27 @@ for i in range(len(cities)):
         longs = cities[i]['gegrLon']
 
 
-def plot_map(city):
-    figure = px.scatter_geo(city,
-                            lat='gegrLat',
-                            lon='gegrLon',
-                            hover_name="stationName",
-                            scope='europe',
-                            )
-    figure.update_layout(
+def plot_map(stations):
+    fig = px.scatter_geo(stations,
+                         lat='gegrLat',
+                         lon='gegrLon',
+                         hover_name="stationName",
+                         scope='europe',
+                         )
+    fig.update_layout(
         geo=dict(
             projection_scale=11,
-            center=dict(lat=51.9189046, lon=19.1343786), showsubunits=True, subunitcolor="Blue"
+            center=dict(lat=51.9189046, lon=19.1343786), showsubunits=True, subunitcolor="Red"
 
         ))
-    figure.update_layout(
+    fig.update_layout(
         geo=dict(
             projection_scale=100,
             center=dict(lat=float(lats), lon=float(longs)),
 
         ))
 
-    return figure
+    return fig
 
 
 chart = st.plotly_chart(plot_map(cities), use_container_width=True)
