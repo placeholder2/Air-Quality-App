@@ -48,7 +48,7 @@ def get_data(p_id):
 
 
 city = get_city(cities)
-st.title(' **Air quality in Poland**')
+st.title(' **Air Quality in Poland**')
 st.write('\n')
 selectcity = st.selectbox('Choose city', city)
 selectstation = st.selectbox('Choose station', get_stations(selectcity, cities))
@@ -72,7 +72,7 @@ def plot_map(stations):
     fig.update_layout(
         geo=dict(
             projection_scale=11,
-            center=dict(lat=51.9189046, lon=19.1343786), showsubunits=True, subunitcolor="Red"
+            center=dict(lat=51.9189046, lon=19.1343786), showsubunits=True
 
         ))
     fig.update_layout(
@@ -87,7 +87,7 @@ def plot_map(stations):
 
 chart = st.plotly_chart(plot_map(cities), use_container_width=True)
 
-param = st.selectbox('Wybierz parameter', param_list)
+param = st.selectbox('Choose parameter', param_list)
 data = get_data(get_params(s, param))
 
 fig = px.line(data['values'], x='date', y="value", title=param)
