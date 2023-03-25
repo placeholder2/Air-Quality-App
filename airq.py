@@ -65,10 +65,10 @@ for i in range(len(cities)):
 
 def plot_map(stations):
     f = folium.Figure(width=100, height=50)
-   map = folium.Map(location=[52,19], control_scale=True)
-   folium.Marker(location=[float(lats),float(longs)],
-                  icon=folium.Icon(color=icon_color, icon='')).add_to(map)
-  return map
+    map = folium.Map(location=[52,19], control_scale=True)
+    folium.Marker(location=[float(lats),float(longs)],
+        icon=folium.Icon(color=icon_color, icon='')).add_to(map)
+    return map
 
 chart = st.plotly_chart(plot_map(cities), use_container_width=True)
 
