@@ -66,10 +66,10 @@ for i in range(len(cities)):
 def plot_map(stations):
     f = folium.Figure(width=100, height=50)
     map = folium.Map(location=[52,19], control_scale=True)
-    iframe = folium.IFrame(stations[stationName])
-    popup = folium.Popup(iframe, min_width=300, max_width=300)
+#     iframe = folium.IFrame(stations[stationName])
+#     popup = folium.Popup(iframe, min_width=300, max_width=300)
     folium.Marker(location=[float(lats),float(longs)],
-        popup = popup, 
+#         popup = popup, 
         icon=folium.Icon(color='blue', icon='')).add_to(map)
     return map
 
