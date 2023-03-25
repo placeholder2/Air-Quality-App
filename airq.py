@@ -68,9 +68,9 @@ def plot_map(stations):
     map = folium.Map(location=[52,19], control_scale=True)
 #     iframe = folium.IFrame(stations[stationName])
 #     popup = folium.Popup(iframe, min_width=300, max_width=300)
-    folium.Marker(location=[float(lats),float(longs)],
+#     folium.Marker(location=[float(lats),float(longs)],
 #         popup = popup, 
-        icon=folium.Icon(color='blue', icon='')).add_to(map)
+#         icon=folium.Icon(color='blue', icon='')).add_to(map)
     return map
 
 chart = st.plotly_chart(plot_map(cities), use_container_width=True)
