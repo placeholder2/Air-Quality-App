@@ -2,6 +2,7 @@ import requests
 import logging
 import streamlit as st
 import plotly.express as px
+import folium
 
 stations = requests.get("http://api.gios.gov.pl/pjp-api/rest/station/findAll")
 logging.info(stations)
@@ -63,27 +64,11 @@ for i in range(len(cities)):
 
 
 def plot_map(stations):
-    fig = px.scatter_geo(stations,
-                         lat='gegrLat',
-                         lon='gegrLon',
-                         hover_name="stationName",
-                         scope='europe',
-                         )
-    fig.update_layout(
-        geo=dict(
-            projection_scale=11,
-            center=dict(lat=51.9189046, lon=19.1343786), showsubunits=True
-
-        ))
-    fig.update_layout(
-        geo=dict(
-            projection_scale=100,
-            center=dict(lat=float(lats), lon=float(longs)),
-
-        ))
-
-    return fig
-
+    f = folium.Figure(width=100, height=50)
+   map = folium.Map(location=[52,19], control_scale=True)
+   folium.Marker(location=[float(lats),float(longs)],
+                  icon=folium.Icon(color=icon_color, icon='')).add_to(map)
+  return map
 
 chart = st.plotly_chart(plot_map(cities), use_container_width=True)
 
