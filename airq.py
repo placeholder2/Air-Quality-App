@@ -3,6 +3,7 @@ import logging
 import streamlit as st
 import plotly.express as px
 import folium
+from streamlit_folium import folium_static
 
 stations = requests.get("http://api.gios.gov.pl/pjp-api/rest/station/findAll")
 logging.info(stations)
@@ -73,7 +74,7 @@ def plot_map(stations):
 #         icon=folium.Icon(color='blue', icon='')).add_to(map)
     return map
 
-chart = st.plotly_chart(plot_map(cities), use_container_width=True)
+chart = folium_static(plot_map(cities), width=700)
 
 param = st.selectbox('Choose parameter', param_list)
 data = get_data(get_params(s, param))
