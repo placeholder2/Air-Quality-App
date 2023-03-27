@@ -1,4 +1,0 @@
-requests
-plotly==5.8.0
-streamlit==1.10.0
-folium==0.14.0
