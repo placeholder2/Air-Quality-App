@@ -2,4 +2,4 @@ requests
 plotly==5.8.0
 streamlit==1.10.0
 folium==0.14.0
-streamlit-folium==0.11.1 
+streamlit-folium==0.11.0
