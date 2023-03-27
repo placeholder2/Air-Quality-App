@@ -10,7 +10,7 @@ logging.info(stations)
 cities = stations.json()
 
 
-def get_city(arg):
+def get_city():
     city_list = [(element['city']['name']) for index, element in enumerate(cities)]
     city_list = sorted(city_list, key=lambda l: l[0])
     return list(dict.fromkeys(city_list))
@@ -24,7 +24,7 @@ def get_stations(city, arg):
 def get_id(station, arg):
     for i in range(len(arg)):
         if arg[i]['stationName'] == station:
-            return (arg[i]['id'])
+            return arg[i]['id']
 
 
 def get_sensors(wrt):
@@ -49,11 +49,11 @@ def get_data(p_id):
     return data.json()
 
 
-city = get_city(cities)
-st.title(' **Air Quality in Poland**')
+city = get_city()
+st.title(' **Air quality in Poland**')
 st.write('\n')
-selectcity = st.selectbox('Choose city', city)
-selectstation = st.selectbox('Choose station', get_stations(selectcity, cities))
+selectcity = st.selectbox('Wybierz miasto', city)
+selectstation = st.selectbox('Wybierz stację', get_stations(selectcity, cities))
 id = get_id(selectstation, cities)
 s = get_sensors(id)
 param_list = param_list(s)
@@ -62,24 +62,34 @@ for i in range(len(cities)):
     if cities[i]['id'] == id:
         lats = cities[i]['gegrLat']
         longs = cities[i]['gegrLon']
+        name = cities[i]['stationName']
 
 
 def plot_map(stations):
     f = folium.Figure(width=100, height=50)
-    map = folium.Map(location=[52,19], control_scale=True)
-#     iframe = folium.IFrame(stations[stationName])
-#     popup = folium.Popup(iframe, min_width=300, max_width=300)
-#     folium.Marker(location=[float(lats),float(longs)],
-#         popup = popup, 
-#         icon=folium.Icon(color='blue', icon='')).add_to(map)
+    map = folium.Map(location=[lats, longs], control_scale=True, zoom_start=15)
+
+    for station in stations:
+        iframe = folium.IFrame(f" {station['stationName']} ")
+        popup = folium.Popup(iframe, min_width=300, max_width=300)
+
+        folium.Marker(location=[float(station['gegrLat']), float(station['gegrLon'])],
+                      popup=popup,
+                      icon=folium.Icon(color='blue', icon='')).add_to(map)
+
+    iframe = folium.IFrame(name)
+    popup = folium.Popup(iframe, min_width=300, max_width=300)
+    folium.Marker(location=[float(lats), float(longs)],
+                  popup=popup,
+                  icon=folium.Icon(color='red', icon='')).add_to(map)
     return map
+
 
 chart = folium_static(plot_map(cities), width=700)
 
-param = st.selectbox('Choose parameter', param_list)
+param = st.selectbox('Wybierz parameter', param_list)
 data = get_data(get_params(s, param))
 
 fig = px.line(data['values'], x='date', y="value", title=param)
 chart1 = st.plotly_chart(fig)
-
 st.caption("Github page: https://github.com/placeholder2")
