@@ -50,7 +50,7 @@ def get_data(p_id):
 
 
 city = get_city()
-st.title(' **Air quality in Poland**')
+st.title(' **Jakość powietrza w Polsce**')
 st.write('\n')
 selectcity = st.selectbox('Wybierz miasto', city)
 selectstation = st.selectbox('Wybierz stację', get_stations(selectcity, cities))
