@@ -5,7 +5,7 @@ import plotly.express as px
 import folium
 from streamlit_folium import folium_static
 
-stations = requests.get("http://api.gios.gov.pl/pjp-api/rest/station/findAll")
+stations = requests.get("https://api.gios.gov.pl/pjp-api/rest/station/findAll")
 logging.info(stations)
 try:
     cities = stations.json()
