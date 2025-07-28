@@ -7,8 +7,11 @@ from streamlit_folium import folium_static
 
 stations = requests.get("http://api.gios.gov.pl/pjp-api/rest/station/findAll")
 logging.info(stations)
-cities = stations.json()
-
+try:
+    cities = stations.json()
+except json.JSONDecodeError as e:
+    st.error(f"JSON decode failed: {e}")
+    st.stop()
 
 def get_city():
     city_list = [(element['city']['name']) for index, element in enumerate(cities)]
