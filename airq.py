@@ -5,49 +5,46 @@ import plotly.express as px
 import folium
 from streamlit_folium import folium_static
 
-stations = requests.get("https://api.gios.gov.pl/pjp-api/rest/station/findAll")
+stations = requests.get("https://api.gios.gov.pl/pjp-api/v1/rest/station/findAll")
 logging.info(stations)
-try:
-    cities = stations.json()
-except json.JSONDecodeError as e:
-    st.error(f"JSON decode failed: {e}")
-    st.stop()
+cities = stations.json()
+
 
 def get_city():
-    city_list = [(element['city']['name']) for index, element in enumerate(cities)]
+    city_list = [(element['Identyfikator miasta']['Nazwa miasta']) for index, element in enumerate(cities)]
     city_list = sorted(city_list, key=lambda l: l[0])
     return list(dict.fromkeys(city_list))
 
 
 def get_stations(city, arg):
-    station_list = [(element['stationName']) for index, element in enumerate(arg) if element['city']['name'] == city]
+    station_list = [(element['Nazwa stacji']) for index, element in enumerate(arg) if element['Identyfikator miasta']['Nazwa miasta'] == city]
     return station_list
 
 
 def get_id(station, arg):
     for i in range(len(arg)):
-        if arg[i]['stationName'] == station:
+        if arg[i]['Nazwa stacji'] == station:
             return arg[i]['id']
 
 
 def get_sensors(wrt):
-    url = 'https://api.gios.gov.pl/pjp-api/rest/station/sensors/' + str(wrt)
+    url = 'https://api.gios.gov.pl/pjp-api/v1/rest/metadata/sensors' + str(wrt)
     response = requests.get(url)
     return response.json()
 
 
 def param_list(sensors):
-    return [value['param']['paramName'] for index, value in enumerate(sensors)]
+    return [value['Wskaźnik - kod']['Wskaźnik'] for index, value in enumerate(sensors)]
 
 
 def get_params(sensors, param):
     for i in range(len(sensors)):
-        if sensors[i]['param']['paramName'] == param:
+        if sensors[i]['Wskaźnik - kod']['Wskaźnik'] == param:
             return sensors[i]['id']
 
 
 def get_data(p_id):
-    url = 'https://api.gios.gov.pl/pjp-api/rest/data/getData/' + str(p_id)
+    url = 'https://api.gios.gov.pl/pjp-api/v1/rest/data/getData/' + str(p_id)
     data = requests.get(url)
     return data.json()
 
@@ -63,9 +60,9 @@ param_list = param_list(s)
 
 for i in range(len(cities)):
     if cities[i]['id'] == id:
-        lats = cities[i]['gegrLat']
-        longs = cities[i]['gegrLon']
-        name = cities[i]['stationName']
+        lats = cities[i]['WGS84 λ E']
+        longs = cities[i]['WGS84 φ N']
+        name = cities[i]['Nazwa stacji']
 
 
 def plot_map(stations):
