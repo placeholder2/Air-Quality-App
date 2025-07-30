@@ -11,7 +11,7 @@ cities = stations.json()
 
 
 def get_city():
-    city_list = [element["Identyfikator miasta"]["Nazwa miasta"] for element in data["data"]]
+    city_list = [element["Identyfikator miasta"]["Nazwa miasta"] for element city in cities]
     city_list = sorted(city_list)
     return list(dict.fromkeys(city_list))
 
