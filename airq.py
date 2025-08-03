@@ -24,7 +24,7 @@ def fetch_sensors_by_station_id(station_id):
 
 def fetch_measurements_by_sensor_id(sensor_id):
     """Get measurement data for a given sensor (parameter) ID."""
-    url = f'https://api.gios.gov.pl/pjp-api/v1/rest/data/getData/{sensor_id}'
+    url = f'https://api.gios.gov.pl/pjp-api/v1/rest/data/getData/{sensor_id}/?size=500'
     response = requests.get(url)
     return response.json().get('Lista danych pomiarowych', [])
 
@@ -152,4 +152,5 @@ st.markdown("""
 Dane pobierane bezpośrednio z publicznego API GIOŚ.
 """)
 st.caption("Github: https://github.com/placeholder2")
+
 
