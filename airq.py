@@ -145,9 +145,11 @@ if measurements:
     st.plotly_chart(fig)
 else:
     st.warning("Brak danych pomiarowych dla wybranego parametru.")
+    
 st.markdown("""
 ---  
  **Źródło danych:** [Główny Inspektorat Ochrony Środowiska (GIOŚ)](https://api.gios.gov.pl)  
 Dane pobierane bezpośrednio z publicznego API GIOŚ.
 """)
 st.caption("Github: https://github.com/placeholder2")
+
