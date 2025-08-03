@@ -152,5 +152,3 @@ st.markdown("""
 Dane pobierane bezpośrednio z publicznego API GIOŚ.
 """)
 st.caption("Github: https://github.com/placeholder2")
-
-
