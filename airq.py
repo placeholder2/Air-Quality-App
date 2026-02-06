@@ -129,7 +129,7 @@ def display_map(all_stations, selected_station):
 # ---------------------- STREAMLIT APP ----------------------
 
 # Wybór języka
-language = st.selectbox("Language / Język", ["pl", "en"])
+language = st.selectbox("Language / Język", ["pl", "en"], index=0)
 t = TEXTS[language]
 
 st.title(t["title"])
@@ -178,3 +178,4 @@ if sensor_options:
 # 7 Źródło danych
 st.markdown(t["data_source"])
 st.caption(t["github"])
+
