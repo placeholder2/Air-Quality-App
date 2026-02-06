@@ -4,5 +4,5 @@ plotly==6.2.0
 folium==0.20.0
 streamlit-folium==0.25.0
 altair==4.2.2
-numpy==1.26.4
-pandas==2.2.5
+numpy==1.25.3
+pandas==2.1.4
