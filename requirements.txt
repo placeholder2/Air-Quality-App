@@ -5,3 +5,4 @@ streamlit==1.47.1
 streamlit_folium==0.25.0
 altair==4.0
 numpy
+pandas
